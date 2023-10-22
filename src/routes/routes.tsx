@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StartScreen, Home } from "../scrrens";
+import { StartScreen, Home } from "../screens";
 
 const PublicRoutes = () => {
   const Stack = createNativeStackNavigator();
