@@ -1,6 +1,6 @@
 export const THEME = {
   COLORS: {
-    PRIMARY: "#7D12FE",
+    PRIMARY: "#F15152",
 
     GRAY_900: "#161819",
     GRAY_600: "#1C1D21",
@@ -18,7 +18,7 @@ export const THEME = {
         REGULAR: "NotoSans_400Regular",
         BOLD: "NotoSans_700Bold",
         EXTRA_BOLD: "NotoSans_800ExtraBold",
-      }
+      },
     },
 
     SIZE: {
@@ -29,6 +29,6 @@ export const THEME = {
       XL: 20,
       XXL: 24,
       XXXL: 32,
-    }
+    },
   },
 };
