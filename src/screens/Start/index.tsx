@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { handleStartGame } from "../../api";
+import { Button } from "../../components";
 
 const StartScreen = () => {
   const navigation = useNavigation();
@@ -17,7 +18,6 @@ const StartScreen = () => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#f435",
       }}
     >
       <Text>Start Screen</Text>
