@@ -8,27 +8,31 @@ import { styles } from "./styles";
 
 const Home = () => {
   const storage = new MMKV({ id: "chat-gpt" });
-  const jsonchatHistory = storage.getString("chatHistory") || "{}";
+  const jsonchatHistory = storage.getString("chat") || "{}";
   const jk = JSON.parse(jsonchatHistory);
-  console.log(jk.message);
 
   const [isLoading, setIsLoading] = useState(false);
   const [description, setDescription] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
-    { fromUser: jk.fromUser, message: jk.message },
-  ]);
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>(jk);
+
+  const saveStorage = (key: string, value: Array<ChatMessage>) => {
+    storage.set(key, JSON.stringify(value));
+  };
 
   const handleFetchIA = async () => {
     setIsLoading(true);
     try {
-      const response = await handleSendingIA(description);
+      const response = await handleSendingIA(
+        `Continue atuando como mestre de RPG e continue a narrativa. Você pode fazer perguntas como "O que o personagem faz agora?". ${description}`
+      );
       const newChatHistory = [
         ...chatHistory,
         { fromUser: true, message: description },
       ];
 
-      newChatHistory.push({ fromUser: false, message: response });
+      newChatHistory.push({ fromUser: false, message: response as string });
       setChatHistory(newChatHistory);
+      saveStorage("chat", newChatHistory);
     } catch (error) {
       console.error("Error sending message:", error);
       Alert.alert("Erro", "Não foi possível acessar ao chat GPT.");

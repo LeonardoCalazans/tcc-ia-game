@@ -5,7 +5,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const START_HISTORY = process.env.START_HISTORY;
 
 const storage = new MMKV({ id: "chat-gpt" });
-const saveStorage = (key: string, value: ChatMessage) => {
+const saveStorage = (key: string, value: Array<ChatMessage>) => {
   storage.set(key, JSON.stringify(value));
 };
 
@@ -31,10 +31,12 @@ export const handleStartGame = async (): Promise<any> => {
     });
 
     const data = (await response.json()) as ChatResponse;
-    saveStorage("chat", {
-      fromUser: false,
-      message: data.choices[0].message.content,
-    });
+    saveStorage("chat", [
+      {
+        fromUser: false,
+        message: data.choices[0].message.content,
+      },
+    ]);
   } catch (error) {
     console.error("Error sending message:", error);
     Alert.alert("Erro", "Não foi possível acessar ao chat GPT.");
@@ -63,11 +65,6 @@ export const handleSendingIA = async (description: string) => {
     });
 
     const data = (await response.json()) as ChatResponse;
-    saveStorage("chat", {
-      fromUser: false,
-      message: data.choices[0].message.content,
-    });
-
     return data.choices[0].message.content;
   } catch (error) {
     console.error("Error sending message:", error);
